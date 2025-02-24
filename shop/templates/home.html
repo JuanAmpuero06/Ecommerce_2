@@ -3,8 +3,45 @@
 {% block title %}Inicio - Mi Ecommerce{% endblock %}
 
 {% block content %}
-    <div class="text-center">
-        <h1>Bienvenido a Mi Ecommerce</h1>
-        <p>Compra los mejores productos al mejor precio.</p>
+<div class="container-fluid p-5 text-center bg-light">
+    <h1 class="display-4 text-primary">Bienvenido a Mi Ecommerce</h1>
+    <p class="lead">Compra los mejores productos al mejor precio.</p>
+    <a href="{% url 'shop:product_list' %}" class="btn btn-lg btn-primary">Explorar Tienda</a>
+</div>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6 d-flex align-items-center">
+            <div>
+                <h2 class="text-secondary">Encuentra lo que necesitas</h2>
+                <p>Ofrecemos una gran variedad de productos de alta calidad. Explora nuestra tienda y encuentra las mejores ofertas.</p>
+                <a href="{% url 'shop:product_list' %}" class="btn btn-outline-primary">Ver Productos</a>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <img src="https://source.unsplash.com/600x400/?shopping" class="img-fluid rounded shadow" alt="Tienda">
+        </div>
     </div>
+</div>
+
+<div class="container text-center mt-5">
+    <h2 class="text-success">Beneficios de Comprar con Nosotros</h2>
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <i class="fas fa-truck fa-3x text-primary"></i>
+            <h4>Envío Rápido</h4>
+            <p>Entregamos en tiempo récord a cualquier parte del país.</p>
+        </div>
+        <div class="col-md-4">
+            <i class="fas fa-shield-alt fa-3x text-warning"></i>
+            <h4>Pago Seguro</h4>
+            <p>Tu información está protegida con los mejores estándares de seguridad.</p>
+        </div>
+        <div class="col-md-4">
+            <i class="fas fa-star fa-3x text-danger"></i>
+            <h4>Productos de Calidad</h4>
+            <p>Solo trabajamos con los mejores proveedores del mercado.</p>
+        </div>
+    </div>
+</div>
 {% endblock %}
