@@ -18,7 +18,7 @@
                     <p class="card-text">{{ product.description|truncatechars:100 }}</p>
                     <p class="card-text"><strong>Precio:</strong> ${{ product.price }}</p>
                     <p class="card-text"><strong>Stock:</strong> {{ product.stock }}</p>
-                    <a href="#" class="btn btn-primary">Agregar al carrito</a>
+                    <a href="{% url 'cart:add_to_cart' product.id %}" class="btn btn-primary">Agregar al Carrito</a>
                 </div>
             </div>
         </div>
