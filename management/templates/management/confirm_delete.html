@@ -1,0 +1,14 @@
+{% extends 'home.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="text-center">Eliminar Producto</h2>
+    <p>¿Estás seguro de que deseas eliminar el producto <strong>{{ product.name }}</strong>?</p>
+    
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Sí, eliminar</button>
+        <a href="{% url 'management:product_list' %}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+{% endblock %}

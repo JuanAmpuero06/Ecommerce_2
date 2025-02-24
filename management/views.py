@@ -34,3 +34,12 @@ def edit_product(request, pk):
     else:
         form = ProductForm(instance=product)
     return render(request, 'management/product_form.html', {'form': form, 'action': 'Editar'})
+
+def delete_product(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    
+    if request.method == "POST":
+        product.delete()
+        return redirect('management:product_list')  # Redirige a la lista de productos después de eliminar
+
+    return render(request, 'management/confirm_delete.html', {'product': product})
