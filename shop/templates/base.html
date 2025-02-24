@@ -37,6 +37,12 @@
                             <a class="nav-link" href="{% url 'accounts:register' %}">Registrarse</a>
                         </li>
                     {% endif %}
+                    {% if user.is_staff %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'management:product_list' %}">Administrar Productos</a>
+                    </li>
+                    {% endif %}
+                
                 </ul>
             </div>
         </div>
