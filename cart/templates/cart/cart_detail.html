@@ -31,6 +31,10 @@
                 <td><strong>${{ total }}</strong></td>
                 <td><a href="{% url 'cart:clear_cart' %}" class="btn btn-warning">Vaciar Carrito</a></td>
             </tr>
+            <form action="{% url 'orders:iniciar_pago' %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-success">Pagar con Transbank</button>
+            </form>            
         </tbody>
     </table>
 </div>

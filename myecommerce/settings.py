@@ -23,6 +23,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-!k09)-!_$wpd#7$h245u$1i66)h8hphd=q*n-ezs&qy36l!m@e'
 
+# Configuración de Transbank
+# URL de retorno para Transbank después del pago
+TRANSBANK_RETURN_URL = "http://127.0.0.1:8000/orders/confirmacion/"
+TRANSBANK_COMMERCE_CODE = '597055555532'  # Código de comercio de prueba
+TRANSBANK_API_KEY = '579B532A7440BB0C9079DED94D31EA1615BACEB56610332264630D42D0A36B1C'
+TRANSBANK_ENVIRONMENT = 'TEST'  # Cambiar a 'PRODUCCIÓN' cuando sea necesario
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
