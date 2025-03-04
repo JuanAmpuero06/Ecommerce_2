@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from transbank.webpay.webpay_plus.transaction import Transaction
 from django.conf import settings
-from .models import Order  # Modelo de órdenes 
-from cart.models import Cart  # Modelo de carrito
+from .models import *  # Modelo de órdenes 
+from cart.models import *  # Modelo de carrito
 from django.contrib.auth.decorators import login_required
 
 @login_required
@@ -14,6 +14,16 @@ def iniciar_pago(request):
         return redirect('cart:cart_detail')
 
     order = Order.objects.create(user=request.user, total=total)  # Crea la orden
+
+    # Agregar los productos del carrito a la orden
+    for item in cart_items:
+        # Crea una nueva instancia de OrderItem y la guarda
+        OrderItem.objects.create(
+            order=order,
+            product=item.product,
+            quantity=item.quantity,
+            price=item.product.price
+        )
 
     tx = Transaction()
     response = tx.create(
@@ -57,6 +67,7 @@ def confirmacion_pago(request):
         return redirect("orders:pago_exitoso")
     else:
         return redirect("orders:pago_fallido")
+
     
     
     
