@@ -40,34 +40,49 @@ def iniciar_pago(request):
 
 def confirmacion_pago(request):
     token = request.GET.get("token_ws")
+    tbk_token = request.GET.get("TBK_TOKEN")
+    tbk_order = request.GET.get("TBK_ORDEN_COMPRA")
 
+    # 🔹 CASO 1: El usuario anuló la compra manualmente
+    if tbk_token:
+        order = get_object_or_404(Order, id=tbk_order)
+        order.status = "Anulado"  # ✅ Ahora se marca como "Anulado" en lugar de "Rechazada"
+        order.save()
+        return redirect("orders:pago_fallido")
+
+    # 🔹 CASO 2: Si no hay `token_ws` ni `TBK_TOKEN`, algo falló
     if not token:
         return redirect("orders:pago_fallido")
 
+    # 🔹 CASO 3: Transacción procesada en Transbank
     transaction = Transaction()
     response = transaction.commit(token)
+    response_code = response.get("response_code")
 
-    if response.get("response_code") == 0:  # Código 0 indica transacción exitosa
-        order = get_object_or_404(Order, id=response.get("buy_order"))
 
-        # 🔹 Restar stock de los productos comprados
+    order = get_object_or_404(Order, id=response.get("buy_order"))
+
+    if response_code == 0:  # Transacción exitosa
+        order.status = "Pagado"
+        
+        # Restar stock de los productos comprados
         for item in order.items.all():
             product = item.product
             product.stock -= item.quantity
             product.save()
 
-        # 🔹 Marcar la orden como pagada
-        order.status = "Pagado"
+        # Vaciar el carrito
+        Cart.objects.filter(user=request.user).delete()
+
         order.save()
-
-        # 🔹 Vaciar el carrito del usuario
-        cart = Cart.objects.filter(user=request.user)
-        cart.delete()  # Elimina todos los productos del carrito
-
         return redirect("orders:pago_exitoso")
-    else:
+
+    elif response_code and response_code != 0:  # Rechazada después de enviarse a Transbank
+        order.status = "Rechazada"
+        order.save()
         return redirect("orders:pago_fallido")
 
+    return redirect("orders:pago_fallido")
     
     
     

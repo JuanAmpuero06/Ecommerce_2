@@ -4,7 +4,7 @@ from shop.models import Product
 
 class Order(models.Model):
     STATUS_CHOICES = [
-        ('pending', 'Pendiente'),
+        ('canceled', 'Anulado'),
         ('paid', 'Pagado'),
         ('failed', 'Fallido'),
     ]
