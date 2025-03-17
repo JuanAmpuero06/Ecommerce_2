@@ -9,4 +9,6 @@ urlpatterns = [
     path('confirmacion/', confirmacion_pago, name='confirmacion_pago'),
     path("pago/exitoso/", views.pago_exitoso, name="pago_exitoso"),
     path("pago/fallido/", views.pago_fallido, name="pago_fallido"),
+    path('mis-ordenes/', lista_ordenes, name='lista_ordenes'),
+    path('orden/<int:order_id>/', detalle_orden, name='detalle_orden'),
 ]

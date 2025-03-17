@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Mis Órdenes</h2>
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Fecha</th>
+        <th>Total</th>
+        <th>Estado</th>
+        <th>Acción</th>
+    </tr>
+    {% for orden in ordenes %}
+    <tr>
+        <td>{{ orden.id }}</td>
+        <td>{{ orden.created_at }}</td>
+        <td>${{ orden.total }}</td>
+        <td>{{ orden.status }}</td>
+        <td><a href="{% url 'orders:detalle_orden' orden.id %}">Ver Detalle</a></td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="5">No tienes órdenes registradas.</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

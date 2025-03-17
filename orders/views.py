@@ -94,3 +94,15 @@ def pago_exitoso(request):
 
 def pago_fallido(request):
     return render(request, "orders/pago_fallido.html")
+
+
+@login_required
+def lista_ordenes(request):
+    ordenes = Order.objects.filter(user=request.user).order_by('-id')
+    return render(request, "orders/lista_ordenes.html", {"ordenes": ordenes})
+
+@login_required
+def detalle_orden(request, order_id):
+    orden = get_object_or_404(Order, id=order_id, user=request.user)
+    items = OrderItem.objects.filter(order=orden)
+    return render(request, "orders/detalle_orden.html", {"orden": orden, "items": items})

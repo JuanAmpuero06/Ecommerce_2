@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Detalle de Orden #{{ orden.id }}</h2>
+<p><strong>Fecha:</strong> {{ orden.created_at }}</p>
+<p><strong>Total:</strong> ${{ orden.total }}</p>
+<p><strong>Estado:</strong> {{ orden.status }}</p>
+
+<h3>Productos Comprados:</h3>
+<table border="1">
+    <tr>
+        <th>Producto</th>
+        <th>Cantidad</th>
+        <th>Precio</th>
+        <th>Subtotal</th>
+    </tr>
+    {% for item in items %}
+    <tr>
+        <td>{{ item.product.name }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>${{ item.product.price }}</td>
+        <td>${{ item.subtotal }}</td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="4">No hay productos en esta orden.</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<a href="{% url 'orders:lista_ordenes' %}">Volver a mis órdenes</a>
+{% endblock %}
