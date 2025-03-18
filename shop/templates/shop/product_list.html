@@ -1,4 +1,4 @@
-{% extends 'home.html' %}
+{% extends 'base.html' %}
 
 {% block content %}
 <div class="container mt-4">
@@ -10,7 +10,7 @@
                 {% if product.image %}
                 <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
                 {% else %}
-                    <img src="https://via.placeholder.com/150" class="card-img-top" alt="Imagen no disponible">
+                <img src="https://via.placeholder.com/150" class="card-img-top" alt="Imagen no disponible">
                 {% endif %}
                 
                 <div class="card-body">
@@ -18,7 +18,12 @@
                     <p class="card-text">{{ product.description|truncatechars:100 }}</p>
                     <p class="card-text"><strong>Precio:</strong> ${{ product.price }}</p>
                     <p class="card-text"><strong>Stock:</strong> {{ product.stock }}</p>
-                    <a href="{% url 'cart:add_to_cart' product.id %}" class="btn btn-primary">Agregar al Carrito</a>
+                    
+                    {% if product.stock > 0 %}
+                        <a href="{% url 'cart:add_to_cart' product.id %}" class="btn btn-primary">Agregar al Carrito</a>
+                    {% else %}
+                        <button class="btn btn-secondary" disabled>Sin stock</button>
+                    {% endif %}
                 </div>
             </div>
         </div>
