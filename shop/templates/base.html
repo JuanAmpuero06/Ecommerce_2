@@ -19,24 +19,28 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'shop:home' %}">Inicio</a>
                     </li>
+                    
                     {% if user.is_authenticated %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'orders:lista_ordenes' %}">📦 Mis Órdenes</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            {{ user.username }}
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                            <li><a class="dropdown-item" href="{% url 'accounts:logout' %}">Cerrar Sesión</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'cart:cart_detail' %}">
-                            🛒 Carrito 
-                            <span class="badge bg-danger">{{ cart_count }}</span>
-                        </a>
-                    </li>                    
+                        {% if not user.is_staff %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'orders:lista_ordenes' %}">📦 Mis Órdenes</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'cart:cart_detail' %}">
+                                    🛒 Carrito 
+                                    <span class="badge bg-danger">{{ cart_count }}</span>
+                                </a>
+                            </li>
+                        {% endif %}
+                        
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                {{ user.username }}
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                                <li><a class="dropdown-item" href="{% url 'accounts:logout' %}">Cerrar Sesión</a></li>
+                            </ul>
+                        </li>
                     {% else %}
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'accounts:login' %}">Iniciar Sesión</a>
@@ -45,6 +49,7 @@
                             <a class="nav-link" href="{% url 'accounts:register' %}">Registrarse</a>
                         </li>
                     {% endif %}
+
                     {% if user.is_staff %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'management:product_list' %}">Administrar Productos</a>
